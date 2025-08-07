@@ -12,7 +12,7 @@ DB_PASS = os.getenv("DB_PASS")
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", 5432)
 
-API_URL= "https://www.musclewiki.com/api/v1/exercise/"
+API_URL= "https://musclewiki.org/Stretches"
 
 #Funcion para obtener los iejercicios de la api
 def fetch_exercises():
@@ -23,7 +23,7 @@ def fetch_exercises():
 #Funcion para ingresar los datos al db
 def insert_exercises(exercises):
     conn = psycopg2.connect(
-        db_name= DB_NAME,
+        dbname= DB_NAME,
         user= DB_USER,
         password= DB_PASS,
         host= DB_HOST,
