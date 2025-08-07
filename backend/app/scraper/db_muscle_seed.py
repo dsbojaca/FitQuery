@@ -11,14 +11,28 @@ DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASS")
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", 5432)
+API_KEY= os.getenv("API_KEY")
 
-API_URL= "https://musclewiki.org/Stretches"
+#URL de la api
+API_URL = "https://api.api-ninjas.com/v1/exercises"
+
+#Lista de musculos 
+MUSCULOS = ["chest", "back", "biceps", "triceps", "legs", "shoulders", "abdominals"]
+
 
 #Funcion para obtener los iejercicios de la api
 def fetch_exercises():
-    response = requests.get(API_URL)
-    response.raise_for_status()
-    return response.json()
+    all_exercises = []
+    for muscle in MUSCULOS:
+        params = {"muscle": muscle}
+        headers = {"X-Api-Key": API_KEY}
+        try:
+            response = requests.get(API_URL, headers=headers, params=params)
+            response.raise_for_status()
+            all_exercises.extend(response.json())
+        except Exception as e:
+            print(f"❌ Error al obtener ejercicios de {muscle}: {e}")
+    return all_exercises
 
 #Funcion para ingresar los datos al db
 def insert_exercises(exercises):
@@ -33,17 +47,18 @@ def insert_exercises(exercises):
 
 
     for ex in exercises:
-        nombre = ex.get("name","Desconocido")
-        grupo = ex.get("primary_muscle", "Otro")
-        equipo = ex.get("equipment_category", "Sin equipo")
+        nombre = ex.get("name", "Desconocido")
+        grupo = ex.get("muscle", "Otro")
+        equipo = ex.get("equipment", "Sin equipo")
         dificultad = ex.get("difficulty", "Media")
-        url = ex.get("url", "")
+        instrucciones = ex.get("instructions", "")
 
         cur.execute("""
-            INSERT INTO ejercicios (nombre, grupo_muscular, equipo, dificultad, url)
-            VALUES( %s, %s, %s, %s, %s)
+            INSERT INTO fit_schema.ejercicios (nombre, grupo_muscular, equipo, dificultad, instrucciones)
+            VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT DO NOTHING
-                    """, (nombre,grupo, equipo, dificultad, url))
+                    """, (nombre, grupo, equipo, dificultad, instrucciones))
+
         
     conn.commit()
     cur.close()
