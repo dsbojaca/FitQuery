@@ -1,0 +1,38 @@
+document.getElementById("searchForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const grupo = document.getElementById("grupo_muscular").value;
+    const dificultad = document.getElementById("dificultad").value;
+
+    // Construir query params
+    const params = new URLSearchParams();
+    if (nombre) params.append("nombre", nombre);
+    if (grupo) params.append("grupo_muscular", grupo);
+    if (dificultad) params.append("dificultad", dificultad);
+
+    // Llamada al backend
+    const response = await fetch(`/ejercicios?${params.toString()}`);
+    const data = await response.json();
+
+    // Mostrar resultados
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (data.length === 0) {
+        resultsDiv.innerHTML = "<p>No se encontraron ejercicios.</p>";
+        return;
+    }
+
+    data.forEach(ex => {
+        const div = document.createElement("div");
+        div.classList.add("exercise");
+        div.innerHTML = `
+            <h3>${ex.nombre}</h3>
+            <p><strong>Grupo muscular:</strong> ${ex.grupo_muscular}</p>
+            <p><strong>Dificultad:</strong> ${ex.dificultad}</p>
+            <p><strong>Instrucciones:</strong> ${ex.instrucciones}</p>
+        `;
+        resultsDiv.appendChild(div);
+    });
+});
