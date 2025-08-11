@@ -3,9 +3,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 
-from models import Base
-from database import engine
-from routes.fitquery_routes import router  # Rutas del backend
+from backend.models import Base
+from backend.database import engine
+from backend.routes.fitquery_routes import router  # Rutas del backend
 
 
 app = FastAPI()

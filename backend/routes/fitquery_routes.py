@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
-from database import get_db
-from models import Ejercicio
-from schemas import EjercicioSchema
+from backend.database import get_db
+from backend.models import Ejercicio
+from backend.schemas import EjercicioSchema
 
 router = APIRouter()
 
