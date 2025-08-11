@@ -14,7 +14,7 @@ app = FastAPI()
 app.include_router(router)
 
 # Ruta absoluta a la carpeta "front"
-FRONT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
+FRONT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
 
 # Servir la carpeta completa para CSS y JS
 app.mount("/static", StaticFiles(directory=FRONT_DIR), name="static")
