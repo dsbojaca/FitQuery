@@ -7,8 +7,6 @@ from models import Base
 from database import engine
 from routes.fitquery_routes import router  # Rutas del backend
 
-# Crear las tablas si no existen
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
