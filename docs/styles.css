@@ -14,11 +14,30 @@ form {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que los inputs bajen de línea en pantallas pequeñas */
+    justify-content: center; /* Centra los inputs cuando están en varias líneas */
 }
 
 input, button {
     padding: 10px;
     font-size: 14px;
+    flex: 1 1 150px; /* Cada input ocupa mínimo 150px y crece si hay espacio */
+    min-width: 120px;
+    box-sizing: border-box;
+}
+
+button {
+    flex: 0 0 auto; /* El botón no crece ni se encoge */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 #results {
@@ -31,6 +50,21 @@ input, button {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
+
 .exercise:last-child {
     border-bottom: none;
 }
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 600px) {
+    form {
+        flex-direction: column;
+    }
+
+    input, button {
+        flex: none;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
