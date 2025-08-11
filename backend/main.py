@@ -15,7 +15,7 @@ Base.metadata.create_all(bind=engine)
 
 # Configurar CORS para permitir llamadas desde GitHub Pages
 origins = [
-    "https://dsbojaca.github.io/FitQuery",
+    "https://dsbojaca.github.io",
 ]
 
 app.add_middleware(
