@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://fitquery-sn0r.onrender.com";
+
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -5,17 +7,14 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
     const grupo = document.getElementById("grupo_muscular").value;
     const dificultad = document.getElementById("dificultad").value;
 
-    // Construir query params
     const params = new URLSearchParams();
     if (nombre) params.append("nombre", nombre);
     if (grupo) params.append("grupo_muscular", grupo);
     if (dificultad) params.append("dificultad", dificultad);
 
-    // Llamada al backend
-    const response = await fetch(`/ejercicios?${params.toString()}`);
+    const response = await fetch(`${API_BASE_URL}/ejercicios?${params.toString()}`);
     const data = await response.json();
 
-    // Mostrar resultados
     const resultsDiv = document.getElementById("results");
     resultsDiv.innerHTML = "";
 
