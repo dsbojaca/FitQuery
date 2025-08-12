@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que los inputs bajen de línea en pantallas pequeñas */
+    justify-content: center; /* Centra los inputs cuando están en varias líneas */
+}
+
+input, button {
+    padding: 10px;
+    font-size: 14px;
+    flex: 1 1 150px; /* Cada input ocupa mínimo 150px y crece si hay espacio */
+    min-width: 120px;
+    box-sizing: border-box;
+}
+
+button {
+    flex: 0 0 auto; /* El botón no crece ni se encoge */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.exercise {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.exercise:last-child {
+    border-bottom: none;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 600px) {
+    form {
+        flex-direction: column;
+    }
+
+    input, button { 
+        flex: none;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 15px;
+    background: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+input, button {
+    font-size: 16px;
+    padding: 12px;
+    flex: 1 1 150px;
+    min-width: 120px;
+    box-sizing: border-box;
+}
+
+button {
+    flex: 0 0 100px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.exercise {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.exercise:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+    form {
+        flex-direction: column;
+    }
+
+    input, button {
+        flex: none;
+        width: 100%;
+    }
+}
+
