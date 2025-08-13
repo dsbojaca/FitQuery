@@ -7,23 +7,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+        <!-- Overlay de carga -->
+    <div id="loadingOverlay">
+        <div class="loadingBox">
+            <p>🔍 Buscando información...</p>
+        </div>
+    </div>
+
     <h1>Buscar Ejercicios</h1>
 
     <form id="searchForm">
-        <input type="text" id="nombre" placeholder="Nombre del ejercicio" list="lista_nombres">
-        <datalist id="lista_nombres"></datalist>
-
-        <input type="text" id="grupo_muscular" placeholder="Grupo muscular" list="lista_grupos">
-        <datalist id="lista_grupos"></datalist>
-
-        <input type="text" id="dificultad" placeholder="Dificultad" list="lista_dificultades">
-        <datalist id="lista_dificultades"></datalist>
-
+        <input type="text" id="nombre" placeholder="Nombre del ejercicio">
+        <input type="text" id="grupo_muscular" placeholder="Grupo muscular">
+        <input type="text" id="dificultad" placeholder="Dificultad">
         <button type="submit">Buscar</button>
     </form>
-
-    <!-- Mensaje de carga -->
-    <p id="loadingMessage" style="display:none; text-align:center; font-weight:bold;">🔍 Buscando información...</p>
 
     <div id="results"></div>
 
