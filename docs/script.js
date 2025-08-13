@@ -1,21 +1,20 @@
-const API_BASE_URL = "https://fitquery-sn0r.onrender.com";
+// Detectar entorno y definir la URL base del backend
+const API_BASE_URL =
+    location.hostname === "127.0.0.1" || location.hostname === "localhost"
+        ? "http://127.0.0.1:8000" // backend local
+        : "https://fitquery-sn0r.onrender.com"; // backend en Render
 
-const loadingOverlay = document.getElementById("loadingOverlay");
-
-function mostrarOverlay() {
-    loadingOverlay.style.display = "flex";
-}
-
-function ocultarOverlay() {
-    loadingOverlay.style.display = "none";
-}
+console.log("Backend usado:", API_BASE_URL);
 
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById("nombre").value;
-    const grupo = document.getElementById("grupo_muscular").value;
-    const dificultad = document.getElementById("dificultad").value;
+    // Mostrar overlay
+    document.getElementById("loadingOverlay").style.display = "flex";
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const grupo = document.getElementById("grupo_muscular").value.trim();
+    const dificultad = document.getElementById("dificultad").value.trim();
 
     const params = new URLSearchParams();
     if (nombre) params.append("nombre", nombre);
@@ -23,46 +22,40 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
     if (dificultad) params.append("dificultad", dificultad);
 
     try {
-        mostrarOverlay();
-
-        // Espera 2 segundos antes de hacer la petición
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        console.log("Enviando petición a:", `${API_BASE_URL}/ejercicios?${params.toString()}`);
         const response = await fetch(`${API_BASE_URL}/ejercicios?${params.toString()}`);
 
         if (!response.ok) {
-            console.error("Error en la respuesta del backend:", response.status, response.statusText);
             alert("Error al obtener los ejercicios. Intenta de nuevo.");
             return;
         }
 
         const data = await response.json();
-        console.log("Datos recibidos:", data);
-
         const resultsDiv = document.getElementById("results");
         resultsDiv.innerHTML = "";
 
         if (data.length === 0) {
             resultsDiv.innerHTML = "<p>No se encontraron ejercicios.</p>";
-            return;
+        } else {
+            data.forEach(ex => {
+                const div = document.createElement("div");
+                div.classList.add("exercise");
+                div.innerHTML = `
+                    <h3>${ex.nombre}</h3>
+                    <p><strong>Grupo muscular:</strong> ${ex.grupo_muscular}</p>
+                    <p><strong>Dificultad:</strong> ${ex.dificultad}</p>
+                    <p><strong>Instrucciones:</strong> ${ex.instrucciones}</p>
+                `;
+                resultsDiv.appendChild(div);
+            });
         }
 
-        data.forEach(ex => {
-            const div = document.createElement("div");
-            div.classList.add("exercise");
-            div.innerHTML = `
-                <h3>${ex.nombre}</h3>
-                <p><strong>Grupo muscular:</strong> ${ex.grupo_muscular}</p>
-                <p><strong>Dificultad:</strong> ${ex.dificultad}</p>
-                <p><strong>Instrucciones:</strong> ${ex.instrucciones}</p>
-            `;
-            resultsDiv.appendChild(div);
-        });
     } catch (error) {
-        console.error("Error en la llamada fetch:", error);
-        alert("Error al conectar con el servidor. Revisa la consola para más detalles.");
+        console.error("Error:", error);
+        alert("Error al conectar con el servidor.");
     } finally {
-        ocultarOverlay();
+        // Ocultar overlay después de 2 segundos
+        setTimeout(() => {
+            document.getElementById("loadingOverlay").style.display = "none";
+        }, 2000);
     }
 });

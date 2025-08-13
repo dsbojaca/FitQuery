@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitQuery - Buscar Ejercicios</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Carga dinámica de CSS y JS según entorno -->
+    <script>
+        const isLocal = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+        const cssPath = isLocal ? "/static/styles.css" : "styles.css";
+        const jsPath = isLocal ? "/static/script.js" : "script.js";
+        document.write(`<link rel="stylesheet" href="${cssPath}">`);
+        // defer para que el script se ejecute después de que el DOM esté listo
+        document.write(`<script src="${jsPath}" defer><\/script>`);
+    </script>
 </head>
 <body>
 
-        <!-- Overlay de carga -->
-    <div id="loadingOverlay">
+    <!-- Overlay de carga -->
+    <div id="loadingOverlay" style="display: none;">
         <div class="loadingBox">
             <p>🔍 Buscando información...</p>
         </div>
@@ -26,6 +35,5 @@
 
     <div id="results"></div>
 
-    <script src="script.js"></script>
 </body>
 </html>
