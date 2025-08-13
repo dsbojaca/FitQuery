@@ -1,5 +1,28 @@
 const API_BASE_URL = "https://fitquery-sn0r.onrender.com";
 
+// Cargar opciones de autocompletado al iniciar
+document.addEventListener("DOMContentLoaded", async () => {
+    await cargarOpciones("nombre", "lista_nombres");
+    await cargarOpciones("grupo_muscular", "lista_grupos");
+    await cargarOpciones("dificultad", "lista_dificultades");
+});
+
+// Función para llenar un <datalist> con opciones únicas desde el backend
+async function cargarOpciones(campo, datalistId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/ejercicios`);
+        const data = await response.json();
+        const opciones = [...new Set(data.map(ex => ex[campo]))];
+
+        const datalist = document.getElementById(datalistId);
+        datalist.innerHTML = opciones
+            .map(valor => `<option value="${valor}">`)
+            .join("");
+    } catch (error) {
+        console.error(`Error cargando opciones para ${campo}:`, error);
+    }
+}
+
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -12,22 +35,29 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
     if (grupo) params.append("grupo_muscular", grupo);
     if (dificultad) params.append("dificultad", dificultad);
 
+    const resultsDiv = document.getElementById("results");
+    const loadingMessage = document.getElementById("loadingMessage");
+
+    // Mostrar mensaje de carga
+    loadingMessage.style.display = "block";
+    resultsDiv.innerHTML = "";
+
     try {
         console.log("Enviando petición a:", `${API_BASE_URL}/ejercicios?${params.toString()}`);
 
         const response = await fetch(`${API_BASE_URL}/ejercicios?${params.toString()}`);
 
+        // Ocultar mensaje de carga
+        loadingMessage.style.display = "none";
+
         if (!response.ok) {
             console.error("Error en la respuesta del backend:", response.status, response.statusText);
-            alert("Error al obtener los ejercicios. Intenta de nuevo.");
+            resultsDiv.innerHTML = "<p style='color:red;'>⚠️ Error al obtener los ejercicios.</p>";
             return;
         }
 
         const data = await response.json();
         console.log("Datos recibidos:", data);
-
-        const resultsDiv = document.getElementById("results");
-        resultsDiv.innerHTML = "";
 
         if (data.length === 0) {
             resultsDiv.innerHTML = "<p>No se encontraron ejercicios.</p>";
@@ -46,7 +76,8 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
             resultsDiv.appendChild(div);
         });
     } catch (error) {
+        loadingMessage.style.display = "none";
         console.error("Error en la llamada fetch:", error);
-        alert("Error al conectar con el servidor. Revisa la consola para más detalles.");
+        resultsDiv.innerHTML = "<p style='color:red;'>⚠️ Error al conectar con el servidor.</p>";
     }
 });
