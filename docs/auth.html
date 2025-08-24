@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth - Login</title>
+    <link rel="stylesheet" href="/static/auth.css" />
+</head>
+
+<body>
+    <div class="auth-container">
+        <h1>Bienvenido</h1>
+
+        <!-- LOGIN -->
+        <div id="loginSection">
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Usuario" required />
+                <input type="password" id="loginPassword" placeholder="Contraseña" required />
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="toggle-text">
+                ¿No tienes cuenta?
+                <button id="showRegister" class="link-btn">Regístrate</button>
+            </p>
+        </div>
+
+        <!-- REGISTER (oculto al inicio) -->
+        <div id="registerSection" style="display: none">
+            <h2>Registro</h2>
+            <form id="registerForm">
+                <input type="text" id="registerUsername" placeholder="Usuario" required />
+                <input type="email" id="registerEmail" placeholder="Email" required />
+                <input type="password" id="registerPassword" placeholder="Contraseña" required />
+                <button type="submit">Registrar</button>
+            </form>
+            <p class="toggle-text">
+                ¿Ya tienes cuenta?
+                <button id="showLogin" class="link-btn">Inicia sesión</button>
+            </p>
+        </div>
+
+        <pre id="output"></pre>
+    </div>
+
+    <script src="/static/auth_script.js"></script>
+</body>
+
+</html>

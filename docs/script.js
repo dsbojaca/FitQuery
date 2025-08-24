@@ -6,6 +6,14 @@ const API_BASE_URL =
 
 console.log("Backend usado:", API_BASE_URL);
 
+// ✅ 1. Verificar si hay token antes de cargar la página
+const token = localStorage.getItem("access_token");
+if (!token) {
+    // Si no hay token, redirige a la página de login
+    window.location.href = "auth.html";
+}
+
+// ✅ 2. Proteger las peticiones con el token
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -22,7 +30,18 @@ document.getElementById("searchForm").addEventListener("submit", async (e) => {
     if (dificultad) params.append("dificultad", dificultad);
 
     try {
-        const response = await fetch(`${API_BASE_URL}/ejercicios?${params.toString()}`);
+        const response = await fetch(`${API_BASE_URL}/ejercicios?${params.toString()}`, {
+            headers: {
+                "Authorization": `Bearer ${token}` // 🔑 Token en headers
+            }
+        });
+
+        if (response.status === 401) {
+            alert("Sesión expirada. Inicia sesión nuevamente.");
+            localStorage.removeItem("access_token");
+            window.location.href = "auth.html";
+            return;
+        }
 
         if (!response.ok) {
             alert("Error al obtener los ejercicios. Intenta de nuevo.");

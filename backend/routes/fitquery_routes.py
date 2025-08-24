@@ -32,3 +32,5 @@ def get_ejercicios(
         query = query.filter(Ejercicio.dificultad.ilike(f"%{dificultad}%"))
 
     return query.all()
+
+
