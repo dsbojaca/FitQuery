@@ -4,7 +4,7 @@ const isLocalhost = window.location.hostname === "localhost" || window.location.
 // 🔥 Cambia esta URL por la de tu backend en Render
 const BACKEND_URL = isLocalhost
     ? "http://127.0.0.1:8000"
-    : "https://tu-backend.onrender.com";
+    : "https://fitquery-sn0r.onrender.com";
 
 // Base de autenticación
 const AUTH_BASE = `${BACKEND_URL}/auth`;
