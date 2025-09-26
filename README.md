@@ -1,5 +1,7 @@
 # 🏋️‍♂️ FitQuery
 
+⚠️ ACTUALMENTE EL DESPLIEGUE DE LA BASE DE DATOS SE ENCUENTRA CONGELADO POR LO QUE LA APLICACION NO ESTA EN UN CORRECTO FUNCIONAMINETO
+
 FitQuery es una aplicación web que permite **buscar y filtrar ejercicios físicos** por nombre, grupo muscular y nivel de dificultad.  
 El backend está desarrollado con **FastAPI**, la base de datos en **PostgreSQL** y el frontend es ligero, construido en HTML, CSS y JavaScript, con despliegue en **GitHub Pages**.
 
